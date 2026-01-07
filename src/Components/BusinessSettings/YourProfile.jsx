@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState,  } from "react";
 import {
   Box,
   Typography,
@@ -213,7 +213,7 @@ export default function YourProfile() {
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Alert severity="success" variant="filled">
-          Profile saved successfully ✅
+          Profile saved successfully 
         </Alert>
       </Snackbar>
     </Box>

@@ -39,7 +39,6 @@ export default function TeamLogin() {
   const [toast, setToast] = useState(false);
   const [permissionUser, setPermissionUser] = useState(null);
 
-  //TEAM MEMBERS
   const [members, setMembers] = useState([
     {
       id: 1,
@@ -63,14 +62,12 @@ export default function TeamLogin() {
     },
   ]);
 
-  //  INVITE FORM
   const [invite, setInvite] = useState({
     name: "",
     email: "",
     role: "Editor",
   });
 
-  //  INVITE MEMBER
   const inviteMember = () => {
     if (!invite.name || !invite.email) return;
 
@@ -88,42 +85,20 @@ export default function TeamLogin() {
 
     setInvite({ name: "", email: "", role: "Editor" });
     setToast(true);
+  };
 
-   };
-
-  // ROLE CHANGE
   const changeRole = (id, role) => {
-    setMembers(
-      members.map((m) =>
-        m.id === id ? { ...m, role } : m
-      )
-    );
+    setMembers(members.map((m) => (m.id === id ? { ...m, role } : m)));
   };
 
-  // TOGGLE ACTIVE
   const toggleActive = (id) => {
-    setMembers(
-      members.map((m) =>
-        m.id === id ? { ...m, active: !m.active } : m
-      )
-    );
+    setMembers(members.map((m) => (m.id === id ? { ...m, active: !m.active } : m)));
   };
 
-  //  TOGGLE 2FA
-  const toggle2FA = (id) => {
-    setMembers(
-      members.map((m) =>
-        m.id === id ? { ...m, twoFA: !m.twoFA } : m
-      )
-    );
-  };
-
-  //  DELETE
   const removeMember = (id) => {
     setMembers(members.filter((m) => m.id !== id));
   };
 
-  //  PERMISSION TOGGLE
   const togglePermission = (perm) => {
     setPermissionUser({
       ...permissionUser,
@@ -133,13 +108,8 @@ export default function TeamLogin() {
     });
   };
 
-  //  SAVE PERMISSIONS
   const savePermissions = () => {
-    setMembers(
-      members.map((m) =>
-        m.id === permissionUser.id ? permissionUser : m
-      )
-    );
+    setMembers(members.map((m) => (m.id === permissionUser.id ? permissionUser : m)));
     setPermissionUser(null);
   };
 
@@ -168,23 +138,17 @@ export default function TeamLogin() {
             label="Name"
             fullWidth
             value={invite.name}
-            onChange={(e) =>
-              setInvite({ ...invite, name: e.target.value })
-            }
+            onChange={(e) => setInvite({ ...invite, name: e.target.value })}
           />
           <TextField
             label="Email"
             fullWidth
             value={invite.email}
-            onChange={(e) =>
-              setInvite({ ...invite, email: e.target.value })
-            }
+            onChange={(e) => setInvite({ ...invite, email: e.target.value })}
           />
           <Select
             value={invite.role}
-            onChange={(e) =>
-              setInvite({ ...invite, role: e.target.value })
-            }
+            onChange={(e) => setInvite({ ...invite, role: e.target.value })}
           >
             <MenuItem value="Editor">Editor</MenuItem>
             <MenuItem value="Photographer">Photographer</MenuItem>
@@ -205,7 +169,6 @@ export default function TeamLogin() {
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Role</TableCell>
-              <TableCell>2FA</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
@@ -221,23 +184,16 @@ export default function TeamLogin() {
                   <Select
                     size="small"
                     value={m.role}
-                    onChange={(e) =>
-                      changeRole(m.id, e.target.value)
-                    }
+                    onChange={(e) => changeRole(m.id, e.target.value)}
+                    sx={{
+                      width: 150,
+                      height: 36,
+                    }}
                   >
                     <MenuItem value="Editor">Editor</MenuItem>
-                    <MenuItem value="Photographer">
-                      Photographer
-                    </MenuItem>
+                    <MenuItem value="Photographer">Photographer</MenuItem>
                     <MenuItem value="Manager">Manager</MenuItem>
                   </Select>
-                </TableCell>
-
-                <TableCell>
-                  <Switch
-                    checked={m.twoFA}
-                    onChange={() => toggle2FA(m.id)}
-                  />
                 </TableCell>
 
                 <TableCell>
@@ -248,9 +204,7 @@ export default function TeamLogin() {
                 </TableCell>
 
                 <TableCell>
-                  <IconButton
-                    onClick={() => setPermissionUser(m)}
-                  >
+                  <IconButton onClick={() => setPermissionUser(m)}>
                     <SecurityIcon />
                   </IconButton>
 
@@ -258,10 +212,7 @@ export default function TeamLogin() {
                     <EmailIcon />
                   </IconButton>
 
-                  <IconButton
-                    color="error"
-                    onClick={() => removeMember(m.id)}
-                  >
+                  <IconButton color="error" onClick={() => removeMember(m.id)}>
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
@@ -287,16 +238,14 @@ export default function TeamLogin() {
             ))}
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setPermissionUser(null)}>
-            Cancel
-          </Button>
+          <Button onClick={() => setPermissionUser(null)}>Cancel</Button>
           <Button variant="contained" onClick={savePermissions}>
             Save
           </Button>
         </DialogActions>
       </Dialog>
 
-      {/* SUCCESS TOAST */}
+      {/* TOAST */}
       <Snackbar
         open={toast}
         autoHideDuration={3000}
@@ -304,7 +253,7 @@ export default function TeamLogin() {
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Alert severity="success" variant="filled">
-          Team action completed successfully 
+          Team action completed successfully
         </Alert>
       </Snackbar>
     </Box>

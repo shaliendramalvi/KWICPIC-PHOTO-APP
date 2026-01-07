@@ -1,4 +1,11 @@
-import { Box, Paper, List, ListItemButton, ListItemText, Typography } from "@mui/material";
+import {
+  Box,
+  Paper,
+  List,
+  ListItemButton,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 import { NavLink, Outlet } from "react-router-dom";
 
 const menu = [
@@ -14,10 +21,17 @@ const menu = [
 
 export default function BusinessSettingsLayout() {
   return (
-    <Box display="flex">
+    <Box display="flex" bgcolor="#f8fafc">
       {/* SIDEBAR */}
-      <Paper sx={{ width: 260, p: 2 }}>
-        <Typography fontWeight="bold" mb={2}>
+      <Paper
+        elevation={0}
+        sx={{
+          width: 260,
+          borderRight: "1px solid #e5e7eb",
+          p: 2,
+        }}
+      >
+        <Typography fontWeight={600} mb={2}>
           Business Settings
         </Typography>
 
@@ -28,8 +42,13 @@ export default function BusinessSettingsLayout() {
               component={NavLink}
               to={m.path}
               sx={{
+                borderRadius: 1,
+                mb: 0.5,
                 "&.active": {
                   bgcolor: "primary.main",
+                  color: "#fff",
+                },
+                "&.active .MuiListItemText-root": {
                   color: "#fff",
                 },
               }}

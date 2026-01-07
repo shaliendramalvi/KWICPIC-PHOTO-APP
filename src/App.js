@@ -1,7 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Dashboard from "./Components/Dashboard";
-import BusinessSettingsLayout from "./Components/BusinessSettings/BusinessSettingsLayout";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
+import Login from "./Components/Login";
+import Dashboard from "./Components/Dashboard";
+import GroupDetails from "./Assets/GroupDetails";
+
+import BusinessSettingsLayout from "./Components/BusinessSettings/BusinessSettingsLayout";
 import YourProfile from "./Components/BusinessSettings/YourProfile";
 import AccountPreferences from "./Components/BusinessSettings/AccountPreferences";
 import BusinessBranding from "./Components/BusinessSettings/BusinessBranding";
@@ -11,14 +14,28 @@ import Watermark from "./Components/BusinessSettings/Watermark";
 import Portfolio from "./Components/BusinessSettings/Portfolio";
 import Wallet from "./Components/BusinessSettings/Wallet";
 
+import Header from "./Components/Header";
+
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* ✅ DASHBOARD FIRST */}
-        <Route path="/" element={<Dashboard />} />
+      {/* HEADER HAR PAGE PE DIKHEGA (LOGIN PE BHI) */}
+      <Header />
 
-        {/* ✅ BUSINESS SETTINGS */}
+      <Routes>
+        {/* 🔴 DEFAULT → LOGIN */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+
+        {/* 🔐 LOGIN */}
+        <Route path="/login" element={<Login />} />
+
+        {/* 🏠 DASHBOARD */}
+        <Route path="/dashboard" element={<Dashboard />} />
+
+        {/* 📸 GROUP */}
+        <Route path="/group/:id" element={<GroupDetails />} />
+
+        {/* ⚙️ BUSINESS SETTINGS */}
         <Route path="/business-settings" element={<BusinessSettingsLayout />}>
           <Route index element={<YourProfile />} />
           <Route path="profile" element={<YourProfile />} />

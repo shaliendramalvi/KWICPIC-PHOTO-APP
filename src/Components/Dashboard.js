@@ -1,63 +1,70 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
   Grid,
   Card,
   CardMedia,
   CardContent,
   Box,
-  Avatar,
-  IconButton,
-  Menu,
-  MenuItem,
-  ListItemIcon,
-  Divider,
-  Stack,
-  Badge,
+  Typography,
   Dialog,
   DialogContent,
   TextField,
+  Button,
+  IconButton,
+  Divider,
   Switch,
 } from "@mui/material";
-
-import SettingsIcon from "@mui/icons-material/Settings";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import SecurityIcon from "@mui/icons-material/Security";
-import SchoolIcon from "@mui/icons-material/School";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import LogoutIcon from "@mui/icons-material/Logout";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const navigate = useNavigate();
 
   const [openCreate, setOpenCreate] = useState(false);
   const [openJoin, setOpenJoin] = useState(false);
-  const [profileAnchor, setProfileAnchor] = useState(null);
-  const [notifyAnchor, setNotifyAnchor] = useState(null);
 
   const [groupName, setGroupName] = useState("");
   const [sellPhotos, setSellPhotos] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const [joinCode, setJoinCode] = useState("");
 
-  const [groups, setGroups] = useState([
-    { title: "TEJAS & PRINCIY", img: "https://picsum.photos/400/250?1" },
-    { title: "JANVI & KRISHNA", img: "https://picsum.photos/400/250?2" },
+   const [groups, setGroups] = useState([
+    {
+      title: "TEJAS & PRINCY",
+      img: "https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac",
+    },
+    {
+      title: "TEJAS",
+      img: "https://images.unsplash.com/photo-1519741497674-611481863552",
+    },
+    {
+      title: "YOG & PRINCY",
+      img: "https://images.unsplash.com/photo-1523438885200-e635ba2c371e",
+    },
+    {
+      title: "PRINCY",
+      img: "https://images.unsplash.com/photo-1507504031003-b417219a0fde",
+    },
+    {
+      title: "RAHUL & PRINCY",
+      img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
+    },
+    {
+      title: "RAJ & PRINCY",
+      img: "https://images.unsplash.com/photo-1504196606672-aef5c9cefc92",
+    },
+    {
+      title: "RAM & PRINCY",
+      img: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc",
+    },
+    {
+      title: "LUV & PRINCY",
+      img: "https://images.unsplash.com/photo-1517841905240-472988babdf9",
+    },
+     
   ]);
 
-  const notifications = [
-    "New client joined Wedding Album",
-    "Payment received ₹8,000",
-  ];
-
-  // CREATE GROUP
+  /* CREATE GROUP */
   const handleCreateGroup = () => {
     if (!groupName.trim()) return;
 
@@ -71,10 +78,11 @@ export default function Dashboard() {
 
     setGroupName("");
     setSellPhotos(false);
+    setShowAdvanced(false);
     setOpenCreate(false);
   };
 
-  // JOIN GROUP
+  /* JOIN GROUP */
   const handleJoinGroup = () => {
     if (!joinCode.trim()) return;
 
@@ -91,155 +99,39 @@ export default function Dashboard() {
   };
 
   return (
-    <Box sx={{ minHeight: "100vh", bgcolor: "#f8fafc" }}>
-      {/* ================= HEADER ================= */}
-      <AppBar position="static" color="inherit" elevation={1}>
-        <Toolbar>
-          <Typography sx={{ flexGrow: 1 }} fontWeight={600}>
-            KwicPic
-          </Typography>
+    <Box sx={{ minHeight: "100vh", bgcolor: "#f8fafc", p: 3 }}>
+      <Typography variant="h6" mb={2}>
+        Groups
+      </Typography>
 
-          {/* JOIN GROUP */}
-          <Button
-            variant="outlined"
-            sx={{ mr: 1 }}
-            onClick={() => setOpenJoin(true)}
-          >
-            Join Group
-          </Button>
-
-          {/* CREATE GROUP */}
-          <Button
-            variant="contained"
-            sx={{ mr: 2 }}
-            onClick={() => setOpenCreate(true)}
-          >
-            Create Group
-          </Button>
-
-          {/* NOTIFICATIONS */}
-          <IconButton onClick={(e) => setNotifyAnchor(e.currentTarget)}>
-            <Badge badgeContent={notifications.length} color="error">
-              <NotificationsNoneIcon />
-            </Badge>
-          </IconButton>
-
-          <Menu
-            anchorEl={notifyAnchor}
-            open={Boolean(notifyAnchor)}
-            onClose={() => setNotifyAnchor(null)}
-          >
-            {notifications.map((n, i) => (
-              <MenuItem key={i}>{n}</MenuItem>
-            ))}
-          </Menu>
-
-          {/* PROFILE DROPDOWN */}
-          <IconButton onClick={(e) => setProfileAnchor(e.currentTarget)}>
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Avatar sx={{ width: 32, height: 32 }}>S</Avatar>
-              <Typography fontSize={14}>Shubham Dubey</Typography>
-              <KeyboardArrowDownIcon />
-            </Stack>
-          </IconButton>
-
-          <Menu
-            anchorEl={profileAnchor}
-            open={Boolean(profileAnchor)}
-            onClose={() => setProfileAnchor(null)}
-          >
-            <MenuItem
-              onClick={() => {
-                navigate("/business-settings/profile");
-                setProfileAnchor(null);
+      <Grid container spacing={3}>
+        {groups.map((g, i) => (
+          <Grid item xs={12} sm={6} md={4} key={i}>
+            <Card
+              onClick={() => navigate(`/group/${i}`)}
+              sx={{
+                borderRadius: 2,
+                cursor: "pointer",
+                transition: "0.3s",
+                "&:hover": {
+                  transform: "translateY(-6px)",
+                  boxShadow: 6,
+                },
               }}
             >
-              <ListItemIcon>
-                <SettingsIcon />
-              </ListItemIcon>
-              Business Settings
-            </MenuItem>
+              <CardMedia component="img" height="180" image={g.img} />
+              <CardContent>
+                <Typography fontWeight="bold">{g.title}</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  12 Participants
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
 
-            <MenuItem>
-              <ListItemIcon>
-                <BarChartIcon />
-              </ListItemIcon>
-              Analytics
-            </MenuItem>
-
-            <MenuItem>
-              <ListItemIcon>
-                <HelpOutlineIcon />
-              </ListItemIcon>
-              Help & Support
-            </MenuItem>
-
-            <MenuItem>
-              <ListItemIcon>
-                <SecurityIcon />
-              </ListItemIcon>
-              Privacy & Security
-            </MenuItem>
-
-            <MenuItem>
-              <ListItemIcon>
-                <SchoolIcon />
-              </ListItemIcon>
-              Tutorials
-            </MenuItem>
-
-            <MenuItem>
-              <ListItemIcon>
-                <InfoOutlinedIcon />
-              </ListItemIcon>
-              About
-            </MenuItem>
-
-            <Divider />
-
-            <MenuItem sx={{ color: "error.main" }}>
-              <ListItemIcon sx={{ color: "error.main" }}>
-                <LogoutIcon />
-              </ListItemIcon>
-              Logout
-            </MenuItem>
-          </Menu>
-        </Toolbar>
-      </AppBar>
-
-      {/* GROUPS */}
-      <Box p={3}>
-        <Typography variant="h6" mb={2}>
-          Groups
-        </Typography>
-
-        <Grid container spacing={3}>
-          {groups.map((g, i) => (
-            <Grid item xs={12} sm={6} md={4} key={i}>
-              <Card
-                sx={{
-                  borderRadius: 2,
-                  transition: "0.3s",
-                  "&:hover": {
-                    transform: "translateY(-6px)",
-                    boxShadow: 6,
-                  },
-                }}
-              >
-                <CardMedia component="img" height="180" image={g.img} />
-                <CardContent>
-                  <Typography fontWeight="bold">{g.title}</Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    12 Participants
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-
-      {/* ================= CREATE GROUP MODAL ================= */}
+      {/* CREATE GROUP MODAL */}
       <Dialog open={openCreate} onClose={() => setOpenCreate(false)} maxWidth="xs" fullWidth>
         <DialogContent sx={{ position: "relative", p: 3 }}>
           <IconButton
@@ -249,39 +141,51 @@ export default function Dashboard() {
             <CloseIcon />
           </IconButton>
 
-          <Typography variant="h6" fontWeight="bold" gutterBottom>
+          <Typography fontWeight={600} mb={1}>
             Create Group
           </Typography>
 
           <TextField
             fullWidth
-            label="Group name"
             size="small"
+            placeholder="Enter group name"
             value={groupName}
             onChange={(e) => setGroupName(e.target.value)}
           />
 
-          <Box mt={2} display="flex" justifyContent="space-between">
-            <Typography variant="body2">Sell and Buy Photos</Typography>
-            <Switch
-              checked={sellPhotos}
-              onChange={(e) => setSellPhotos(e.target.checked)}
-            />
+          <Box
+            mt={2}
+            px={1.5}
+            py={1}
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            bgcolor="#f3f4f6"
+            borderRadius={1.5}
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            sx={{ cursor: "pointer" }}
+          >
+            <Typography fontSize={13}>Advanced Settings</Typography>
+            <Typography fontSize={12}>{showAdvanced ? "▲" : "▼"}</Typography>
           </Box>
 
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3 }}
-            disabled={!groupName.trim()}
-            onClick={handleCreateGroup}
-          >
+          {showAdvanced && (
+            <>
+              <Divider sx={{ my: 1 }} />
+              <Box display="flex" justifyContent="space-between">
+                <Typography fontSize={13}>Sell and Buy Photos</Typography>
+                <Switch checked={sellPhotos} onChange={(e) => setSellPhotos(e.target.checked)} />
+              </Box>
+            </>
+          )}
+
+          <Button fullWidth variant="contained" sx={{ mt: 3 }} onClick={handleCreateGroup}>
             Create
           </Button>
         </DialogContent>
       </Dialog>
 
-      {/*JOIN GROUP MODAL*/}
+      {/* JOIN GROUP MODAL */}
       <Dialog open={openJoin} onClose={() => setOpenJoin(false)} maxWidth="xs" fullWidth>
         <DialogContent sx={{ position: "relative", p: 3 }}>
           <IconButton
@@ -291,25 +195,19 @@ export default function Dashboard() {
             <CloseIcon />
           </IconButton>
 
-          <Typography variant="h6" fontWeight="bold" gutterBottom>
+          <Typography fontWeight={600} mb={2}>
             Join Group
           </Typography>
 
           <TextField
             fullWidth
-            label="Invite Code / Link"
             size="small"
+            label="Invite Code / Link"
             value={joinCode}
             onChange={(e) => setJoinCode(e.target.value)}
           />
 
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3 }}
-            disabled={!joinCode.trim()}
-            onClick={handleJoinGroup}
-          >
+          <Button fullWidth variant="contained" sx={{ mt: 3 }} onClick={handleJoinGroup}>
             Join
           </Button>
         </DialogContent>
